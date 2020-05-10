@@ -1,0 +1,48 @@
+title {label: "Org chart Entity-Relationship diagram", size: "20"}
+
+# Nice colors from Erwiz:
+# red #fcecec
+# blue #ececfc
+# green #d0e0d0
+# yellow #fbfbdb
+# orange #eee0a0
+
+# Entities
+
+[user] {bgcolor: "#d0e0d0"}
+  *user_id {label: "integer, not null"}
+  email {label: "varchar, not null"}
+  first_name {label: "varchar"}
+  last_name {label: "varchar"}
+  profile_pic {label: "varchar(1234)"}
+  role {label: "varchar" }
+  is_admin { label: "boolean" }
+  *org_id{label: "integer not null"}
+  *dept_id{label: "integer"}
+  
+  
+[organisation] {bgcolor: "#fcecec"}
+  *org_id{label: "integer not null"}
+  name{label: "varchar" }
+
+[department] {bgcolor: "#fbfbdb"}
+  *dept_id{label: "integer not null"}
+  *org_id{label: "integer not null"}
+  name{label: "varchar" }
+  color{label: "varchar"}
+
+[chart_node] {bgcolor: "#eee0a0"}
+  *node_id{label: "integer not null"}
+  *org_id{label: "integer not null" }
+  *user_id{label: "integer not null"}
+  *parent_id{label: "ref to node_id"}
+
+# Relationships
+
+organisation      1--* user
+organisation      1--* department
+organisation      1--* chart_node
+department        1--* user
+user              1--* chart_node
+chart_node        1--* chart_node {label: "children" }
+
